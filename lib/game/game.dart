@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flame/game.dart';
 import 'package:flutter/widgets.dart' hide Route, OverlayRoute;
+import 'package:ski_master/game/routes/gameplay.dart';
 import 'package:ski_master/game/routes/level_selection.dart';
-// import 'package:flame_tiled/flame_tiled.dart';
 import 'package:ski_master/game/routes/main_menu.dart';
 import 'package:ski_master/game/routes/settings.dart';
 
@@ -15,11 +15,13 @@ class SkiMasterGame extends FlameGame {
     MainMenu.id: OverlayRoute((context, game) {
       return MainMenu(
         onPlayPressed: () => _routeById(LevelSelection.id),
+        onSettingsPressed: () => _routeById(Settings.id),
       );
     }),
     LevelSelection.id: OverlayRoute((context, game) {
       return LevelSelection(
-        onBackPressed: () => _popRoute,
+        onLevelSelected: _startLevel,
+        onBackPressed: _popRoute,
       );
     }),
     Settings.id: OverlayRoute((context, game) {
@@ -28,6 +30,7 @@ class SkiMasterGame extends FlameGame {
         sfxValueListenable: sfxValueNotifier,
         onMusicValueChanged: (value) => musicValueNotifier.value = value,
         onSfxValueChanged: (value) => sfxValueNotifier.value = value,
+        onBackPressed: _popRoute,
       );
     }),
   };
@@ -39,8 +42,6 @@ class SkiMasterGame extends FlameGame {
   @override
   Future<void> onLoad() async {
     await add(_router);
-    // final map = await TiledComponent.load('sampleMap.tmx', Vector2.all(16));
-    // await add(map);
   }
 
   // --- Routes Action ---
@@ -50,5 +51,13 @@ class SkiMasterGame extends FlameGame {
 
   void _popRoute() {
     _router.pop();
+  }
+
+  void _startLevel(int levelIndex) {
+    _router.pop();
+    _router.pushReplacement(
+      Route(() => Gameplay(levelIndex)),
+      name: Gameplay.id,
+    );
   }
 }
