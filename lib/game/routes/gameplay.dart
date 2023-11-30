@@ -37,7 +37,8 @@ class Gameplay extends Component with KeyboardHandler {
     );
     await add(camera);
 
-    camera.moveTo(Vector2(map.size.x * 0.5, camera.viewport.virtualSize.y * 0.5)); // X = 320/2 (160), Y = 180/2 (90)
+    // camera.moveTo(Vector2(map.size.x * 0.5, camera.viewport.virtualSize.y * 0.5)); // X = 320/2 (160), Y = 180/2 (90)
+    camera.follow(player);
 
     // Camera target == Viewfinder anchor (aka logical center)
     // Default value of anchor for Viewfinder is Anchor.center
