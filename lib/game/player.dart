@@ -1,11 +1,12 @@
 import 'dart:async';
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:flame/components.dart';
 import 'package:flame/sprite.dart';
-import 'package:flutter/foundation.dart';
+import 'package:ski_master/game/routes/gameplay.dart';
 
-class Player extends PositionComponent with HasGameReference {
+class Player extends PositionComponent with HasGameReference, HasAncestor<Gameplay> {
   Player({super.position});
 
   late final SpriteComponent _body;
@@ -36,8 +37,14 @@ class Player extends PositionComponent with HasGameReference {
   // Distance = Speed x Time
   @override
   void update(double dt) {
+    _moveDirection.x = ancestor.input.hAxis;
+    _moveDirection.y = 1;
+
+    _moveDirection.normalize();
     _speed = lerpDouble(_speed, _maxSpeed, _acceleration * dt)!;
-    position.addScaled(_moveDirection, _speed * dt);
     print('SPEED: $_speed');
+
+    angle = _moveDirection.screenAngle() + pi;
+    position.addScaled(_moveDirection, _speed * dt);
   }
 }
