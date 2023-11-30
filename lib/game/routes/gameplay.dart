@@ -22,7 +22,7 @@ class Gameplay extends Component with KeyboardHandler {
 
   @override
   Future<void> onLoad() async {
-    final map = await TiledComponent.load('sampleMap.tmx', Vector2.all(64));
+    final map = await TiledComponent.load('Level1.tmx', Vector2.all(16));
     await add(map);
   }
 
