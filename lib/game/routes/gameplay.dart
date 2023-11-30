@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flame/components.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 import 'package:flutter/services.dart';
+import 'package:ski_master/game/player.dart';
 
 class Gameplay extends Component with KeyboardHandler {
   Gameplay(
@@ -23,8 +24,9 @@ class Gameplay extends Component with KeyboardHandler {
   @override
   Future<void> onLoad() async {
     final map = await TiledComponent.load('Level1.tmx', Vector2.all(16));
+    final player = Player(position: Vector2(map.size.x * 0.5, 8));
 
-    final world = World(children: [map]);
+    final world = World(children: [map, player]);
     await add(world);
 
     // If want to potrait mode then we change width into 180 and height into 320
