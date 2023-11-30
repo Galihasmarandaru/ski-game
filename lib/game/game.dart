@@ -1,13 +1,16 @@
 import 'dart:async';
 
+import 'package:flame/components.dart';
+import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/widgets.dart' hide Route, OverlayRoute;
 import 'package:ski_master/game/routes/gameplay.dart';
 import 'package:ski_master/game/routes/level_selection.dart';
 import 'package:ski_master/game/routes/main_menu.dart';
+import 'package:ski_master/game/routes/pause_menu.dart';
 import 'package:ski_master/game/routes/settings.dart';
 
-class SkiMasterGame extends FlameGame {
+class SkiMasterGame extends FlameGame with HasKeyboardHandlerComponents {
   final musicValueNotifier = ValueNotifier(true);
   final sfxValueNotifier = ValueNotifier(true);
 
@@ -33,6 +36,13 @@ class SkiMasterGame extends FlameGame {
         onBackPressed: _popRoute,
       );
     }),
+    PauseMenu.id: OverlayRoute((context, game) {
+      return PauseMenu(
+        onResumePressed: _resumeGame,
+        onRestartPressed: _restartLevel,
+        onExitPressed: _exitToMainMenu,
+      );
+    }),
   };
 
   late final _router = RouterComponent(
@@ -56,8 +66,36 @@ class SkiMasterGame extends FlameGame {
   void _startLevel(int levelIndex) {
     _router.pop();
     _router.pushReplacement(
-      Route(() => Gameplay(levelIndex)),
+      Route(() => Gameplay(
+            levelIndex,
+            onPausePressed: _pauseGame,
+            key: ComponentKey.named(Gameplay.id),
+          )),
       name: Gameplay.id,
     );
+  }
+
+  void _restartLevel() {
+    final gameplay = findByKeyName<Gameplay>(Gameplay.id);
+
+    if (gameplay != null) {
+      _startLevel(gameplay.currentLevel);
+      resumeEngine();
+    }
+  }
+
+  void _pauseGame() {
+    _router.pushNamed(PauseMenu.id);
+    pauseEngine();
+  }
+
+  void _resumeGame() {
+    _router.pop();
+    resumeEngine();
+  }
+
+  void _exitToMainMenu() {
+    _resumeGame();
+    _router.pushReplacementNamed(MainMenu.id);
   }
 }
