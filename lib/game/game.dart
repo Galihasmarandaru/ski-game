@@ -5,9 +5,11 @@ import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/widgets.dart' hide Route, OverlayRoute;
 import 'package:ski_master/game/routes/gameplay.dart';
+import 'package:ski_master/game/routes/level_complete.dart';
 import 'package:ski_master/game/routes/level_selection.dart';
 import 'package:ski_master/game/routes/main_menu.dart';
 import 'package:ski_master/game/routes/pause_menu.dart';
+import 'package:ski_master/game/routes/retry_menu.dart';
 import 'package:ski_master/game/routes/settings.dart';
 
 class SkiMasterGame extends FlameGame with HasKeyboardHandlerComponents {
@@ -43,6 +45,19 @@ class SkiMasterGame extends FlameGame with HasKeyboardHandlerComponents {
         onExitPressed: _exitToMainMenu,
       );
     }),
+    LevelComplete.id: OverlayRoute((context, game) {
+      return LevelComplete(
+        onNextPressed: _startNextLevel,
+        onRetryPressed: _restartLevel,
+        onExitPressed: _exitToMainMenu,
+      );
+    }),
+    RetryMenu.id: OverlayRoute((context, game) {
+      return RetryMenu(
+        onRetryPressed: _restartLevel,
+        onExitPressed: _exitToMainMenu,
+      );
+    }),
   };
 
   late final _router = RouterComponent(
@@ -69,6 +84,8 @@ class SkiMasterGame extends FlameGame with HasKeyboardHandlerComponents {
       Route(() => Gameplay(
             levelIndex,
             onPausePressed: _pauseGame,
+            onLevelComplete: _showLevelCompleteMenu,
+            onGameOver: _showRetryMenu,
             key: ComponentKey.named(Gameplay.id),
           )),
       name: Gameplay.id,
@@ -81,6 +98,13 @@ class SkiMasterGame extends FlameGame with HasKeyboardHandlerComponents {
     if (gameplay != null) {
       _startLevel(gameplay.currentLevel);
       resumeEngine();
+    }
+  }
+
+  void _startNextLevel() {
+    final gameplay = findByKeyName<Gameplay>(Gameplay.id);
+    if (gameplay != null) {
+      _startLevel(gameplay.currentLevel + 1);
     }
   }
 
@@ -97,5 +121,13 @@ class SkiMasterGame extends FlameGame with HasKeyboardHandlerComponents {
   void _exitToMainMenu() {
     _resumeGame();
     _router.pushReplacementNamed(MainMenu.id);
+  }
+
+  void _showLevelCompleteMenu() {
+    _router.pushNamed(LevelComplete.id);
+  }
+
+  void _showRetryMenu() {
+    _router.pushNamed(RetryMenu.id);
   }
 }
