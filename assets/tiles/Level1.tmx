@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="20" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="3" nextobjectid="1">
- <tileset firstgid="1" name="tilemap_packed" tilewidth="16" tileheight="16" tilecount="132" columns="12">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="20" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="11">
+ <tileset firstgid="1" name="tilemap_packed" tilewidth="16" tileheight="16" tilecount="132" columns="12" objectalignment="center">
   <image source="../images/tilemap_packed.png" width="192" height="176"/>
  </tileset>
  <layer id="1" name="Path" width="20" height="40">
@@ -91,4 +91,13 @@
 0,0,0,0,0,0,22,0,0,21,0,0,0,0,0,31,0,0,0,19
 </data>
  </layer>
+ <objectgroup id="3" name="SpawnPoint">
+  <object id="1" name="Player" type="Player" x="159.956" y="15.0005">
+   <point/>
+  </object>
+  <object id="3" type="Snowman" gid="70" x="184" y="152" width="16" height="16"/>
+  <object id="6" type="Snowman" gid="70" x="152" y="312" width="16" height="16"/>
+  <object id="7" type="Snowman" gid="70" x="120" y="408" width="16" height="16"/>
+  <object id="8" type="Snowman" gid="70" x="136" y="568" width="16" height="16"/>
+ </objectgroup>
 </map>
