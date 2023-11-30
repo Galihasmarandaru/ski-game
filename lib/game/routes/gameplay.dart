@@ -23,7 +23,22 @@ class Gameplay extends Component with KeyboardHandler {
   @override
   Future<void> onLoad() async {
     final map = await TiledComponent.load('Level1.tmx', Vector2.all(16));
-    await add(map);
+
+    final world = World(children: [map]);
+    await add(world);
+
+    // If want to potrait mode then we change width into 180 and height into 320
+    final camera = CameraComponent.withFixedResolution(
+      width: 320,
+      height: 180,
+      world: world,
+    );
+    await add(camera);
+
+    camera.moveTo(Vector2(map.size.x * 0.5, camera.viewport.virtualSize.y * 0.5)); // X = 320/2 (160), Y = 180/2 (90)
+
+    // Camera target == Viewfinder anchor (aka logical center)
+    // Default value of anchor for Viewfinder is Anchor.center
   }
 
   @override

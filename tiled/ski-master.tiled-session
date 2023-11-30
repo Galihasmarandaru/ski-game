@@ -3,10 +3,23 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "",
+    "activeFile": "Level1.tmx",
     "expandedProjectPaths": [
+        "."
     ],
     "fileStates": {
+        "Level1.tmx": {
+            "scale": 0.9904,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 86.8336025848142,
+                "y": 349.3537964458805
+            }
+        },
+        "tilemap_packed.tsx": {
+            "scaleInDock": 1.6106,
+            "scaleInEditor": 1
+        }
     },
     "last.exportedFilePath": "/Users/angaliha26/Documents/Learning/Flutter/Projects/ski_master/assets/tiles",
     "last.imagePath": "/Users/angaliha26/Documents/Learning/Flutter/Projects/ski_master/assets/images",
@@ -17,9 +30,13 @@
     "map.tileWidth": 16,
     "map.width": 20,
     "openFiles": [
+        "tilemap_packed.tsx",
+        "Level1.tmx"
     ],
     "project": "ski-master.tiled-project",
     "recentFiles": [
+        "tilemap_packed.tsx",
+        "Level1.tmx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {

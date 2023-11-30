@@ -64,6 +64,10 @@ class SkiMasterGame extends FlameGame with HasKeyboardHandlerComponents {
     initialRoute: MainMenu.id,
     routes: _routes,
   );
+
+  @override
+  Color backgroundColor() => const Color.fromARGB(255, 238, 248, 254);
+
   @override
   Future<void> onLoad() async {
     await add(_router);
