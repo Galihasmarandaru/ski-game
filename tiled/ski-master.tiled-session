@@ -9,11 +9,11 @@
     ],
     "fileStates": {
         "Level1.tmx": {
-            "scale": 0.9904,
-            "selectedLayer": 1,
+            "scale": 2.9151,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 86.8336025848142,
-                "y": 349.3537964458805
+                "x": 164.31683304174817,
+                "y": 181.8119447017255
             }
         },
         "tilemap_packed.tsx": {
