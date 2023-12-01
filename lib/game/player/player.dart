@@ -29,6 +29,9 @@ class Player extends PositionComponent with HasGameReference, HasAncestor<Gamepl
     // );
 
     await add(_body);
+    await add(
+      CircleHitbox.relative(1, parentSize: _body.size, anchor: Anchor.center),
+    );
   }
 
   // Frame per second = 60 frames
@@ -57,5 +60,10 @@ class Player extends PositionComponent with HasGameReference, HasAncestor<Gamepl
     if (other is Snowman) {
       other.collect();
     }
+  }
+
+  void resetTo(Vector2 resetPosition) {
+    position.setFrom(resetPosition);
+    _speed *= 0.5;
   }
 }
